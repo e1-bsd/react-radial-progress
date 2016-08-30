@@ -32,6 +32,8 @@
   "homepage": "https://github.com/samidarko/react-radial-progress#readme",
   "devDependencies": {
     "babel": "5.8.21",
+    "babel-preset-es2015": "^6.14.0",
+    "babel-preset-react": "^6.11.1",
     "chai": "3.4.0",
     "codecov": "1.0.1",
     "commitizen": "2.3.0",

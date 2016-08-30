@@ -89,7 +89,7 @@ export class RadialProgress extends React.Component {
                       strokeWidth={this.props.circleStrokeWidth}/>
                 {
                     this.props.displayText &&
-                    <text x={center} y={center} textAnchor="middle">{text}</text>
+                    <text x={center} y={this.props.forcedTextY || center} textAnchor="middle">{text}</text>
                 }
             </svg>
         );
@@ -108,7 +108,8 @@ RadialProgress.defaultProps = {
     formatText: (value) => value,
     animated: true,
     fps: 60,
-    progressRate: 1
+    progressRate: 1,
+    forcedTextY: 0,
 };
 
 RadialProgress.propTypes = {
@@ -124,7 +125,8 @@ RadialProgress.propTypes = {
     formatText: React.PropTypes.func,
     animated: React.PropTypes.bool.isRequired,
     fps: React.PropTypes.number.isRequired,
-    progressRate: React.PropTypes.number.isRequired
+    progressRate: React.PropTypes.number.isRequired,
+    forcedTextY: React.PropTypes.number.isRequired,
 };
 
 export default RadialProgress;
