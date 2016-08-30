@@ -5,44 +5,18 @@ function clamp (n, min, max) {
 }
 
 export class RadialProgress extends React.Component {
-
-    constructor() {
-        super();
-        this.initialize = this.initialize.bind(this);
+    constructor(props) {
+        super(props);
         this.generatePath = this.generatePath.bind(this);
-        this.setInterval = this.setInterval.bind(this);
-        this.state = {value: 0};
-    }
-
-    setInterval() {
-        clearInterval(this.interval);
-        this.interval = setInterval(() => {
-            if (this.state.value < this.props.value) {
-                this.setState({value: this.state.value + this.props.progressRate});
-            } else {
-                clearInterval(this.interval);
-            }
-        }, 1000/this.props.fps);
-    }
-
-    initialize() {
-        if (this.props.animated) {
-            this.setInterval();
-        } else {
-            this.setState({value: this.props.value});
-        }
-    }
-
-    componentDidMount() {
-        this.initialize();
+        this.state = {value: props.value || 0};
     }
 
     componentWillUnmount() {
         if (this.props.animated) clearInterval(this.interval);
     }
 
-    componentWillReceiveProps() {
-        this.setState({value: 0}, this.initialize);
+    componentWillReceiveProps({ value = 0 }) {
+        this.setState({ value });
     }
 
     generatePath(degrees) {
@@ -60,7 +34,6 @@ export class RadialProgress extends React.Component {
     }
 
     render() {
-
         const center = this.props.edgeSize / 2;
         const radius = this.props.radius;
         let degrees, text = '';
@@ -106,9 +79,6 @@ RadialProgress.defaultProps = {
     unit: 'degrees',
     displayText: true,
     formatText: (value) => value,
-    animated: true,
-    fps: 60,
-    progressRate: 1,
     forcedTextY: 0,
 };
 
@@ -123,11 +93,7 @@ RadialProgress.propTypes = {
     unit: React.PropTypes.oneOf(['degrees', 'percent']).isRequired,
     displayText: React.PropTypes.bool.isRequired,
     formatText: React.PropTypes.func,
-    animated: React.PropTypes.bool.isRequired,
-    fps: React.PropTypes.number.isRequired,
-    progressRate: React.PropTypes.number.isRequired,
     forcedTextY: React.PropTypes.number.isRequired,
 };
 
 export default RadialProgress;
-

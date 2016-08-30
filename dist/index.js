@@ -26,65 +26,28 @@ function clamp(n, min, max) {
 var RadialProgress = exports.RadialProgress = function (_React$Component) {
     _inherits(RadialProgress, _React$Component);
 
-    function RadialProgress() {
+    function RadialProgress(props) {
         _classCallCheck(this, RadialProgress);
 
-        var _this = _possibleConstructorReturn(this, (RadialProgress.__proto__ || Object.getPrototypeOf(RadialProgress)).call(this));
+        var _this = _possibleConstructorReturn(this, (RadialProgress.__proto__ || Object.getPrototypeOf(RadialProgress)).call(this, props));
 
-        _this.initialize = _this.initialize.bind(_this);
         _this.generatePath = _this.generatePath.bind(_this);
-        _this.setInterval = _this.setInterval.bind(_this);
-        _this.state = { value: 0 };
+        _this.state = { value: props.value || 0 };
         return _this;
     }
 
     _createClass(RadialProgress, [{
-        key: 'setInterval',
-        value: function (_setInterval) {
-            function setInterval() {
-                return _setInterval.apply(this, arguments);
-            }
-
-            setInterval.toString = function () {
-                return _setInterval.toString();
-            };
-
-            return setInterval;
-        }(function () {
-            var _this2 = this;
-
-            clearInterval(this.interval);
-            this.interval = setInterval(function () {
-                if (_this2.state.value < _this2.props.value) {
-                    _this2.setState({ value: _this2.state.value + _this2.props.progressRate });
-                } else {
-                    clearInterval(_this2.interval);
-                }
-            }, 1000 / this.props.fps);
-        })
-    }, {
-        key: 'initialize',
-        value: function initialize() {
-            if (this.props.animated) {
-                this.setInterval();
-            } else {
-                this.setState({ value: this.props.value });
-            }
-        }
-    }, {
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            this.initialize();
-        }
-    }, {
         key: 'componentWillUnmount',
         value: function componentWillUnmount() {
             if (this.props.animated) clearInterval(this.interval);
         }
     }, {
         key: 'componentWillReceiveProps',
-        value: function componentWillReceiveProps() {
-            this.setState({ value: 0 }, this.initialize);
+        value: function componentWillReceiveProps(_ref) {
+            var _ref$value = _ref.value;
+            var value = _ref$value === undefined ? 0 : _ref$value;
+
+            this.setState({ value: value });
         }
     }, {
         key: 'generatePath',
@@ -104,7 +67,6 @@ var RadialProgress = exports.RadialProgress = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-
             var center = this.props.edgeSize / 2;
             var radius = this.props.radius;
             var degrees = void 0,
@@ -157,9 +119,6 @@ RadialProgress.defaultProps = {
     formatText: function formatText(value) {
         return value;
     },
-    animated: true,
-    fps: 60,
-    progressRate: 1,
     forcedTextY: 0
 };
 
@@ -174,9 +133,6 @@ RadialProgress.propTypes = {
     unit: _react2.default.PropTypes.oneOf(['degrees', 'percent']).isRequired,
     displayText: _react2.default.PropTypes.bool.isRequired,
     formatText: _react2.default.PropTypes.func,
-    animated: _react2.default.PropTypes.bool.isRequired,
-    fps: _react2.default.PropTypes.number.isRequired,
-    progressRate: _react2.default.PropTypes.number.isRequired,
     forcedTextY: _react2.default.PropTypes.number.isRequired
 };
 
