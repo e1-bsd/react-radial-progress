@@ -1,6 +1,6 @@
 {
-  "name": "react-radial-progress",
-  "version": "0.0.0-semantically-released",
+  "name": "react-radial-progress-sans-animation",
+  "version": "0.0.1",
   "description": "a radial progress bar in react js and SVG",
   "main": "dist/index.js",
   "scripts": {
